@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.jetpackcompose.zomatoclone.components.LocationView
 import com.jetpackcompose.zomatoclone.components.QRCodeScannerView
+import com.jetpackcompose.zomatoclone.components.SearchView
 
 @Composable
 fun OrderScreen() {
@@ -17,6 +18,7 @@ fun OrderScreen() {
             LocationView(Modifier.weight(4f))
             QRCodeScannerView(Modifier.weight(0.5f))
         }
+        SearchView(Modifier.padding(vertical = 20.dp))
     }
 }
 
