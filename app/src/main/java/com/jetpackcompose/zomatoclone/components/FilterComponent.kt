@@ -1,22 +1,16 @@
 package com.jetpackcompose.zomatoclone.components
 
-import androidx.compose.foundation.ClickableText
-import androidx.compose.foundation.ScrollableRow
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jetpackcompose.zomatoclone.R
@@ -29,7 +23,6 @@ fun FilterComponent(modifier: Modifier, items: List<FilterItem>, onItemClick: (F
             getFilterPill(it, it.isSelected, onItemClick)
         }
     }
-
 }
 
 @Composable
@@ -41,18 +34,20 @@ fun getFilterPill(item: FilterItem, shouldHighlight: Boolean, onItemClick: (Filt
                     color = getBorderColor(shouldHighlight),
                     shape = RoundedCornerShape(5.dp)
             ).background(color = getBackgroundColor(shouldHighlight))
+                    .clickable(onClick = { onItemClick(item) })
     ) {
         val drawableRes = item.drawableRes
         drawableRes?.let { Icon(asset = vectorResource(id = drawableRes)) }
-        ClickableText(
+        Text(
                 maxLines = 1,
-                text = AnnotatedString(item.label),
-                style = TextStyle(color = colorResource(id = R.color.grey_shade2), fontSize = 12.sp),
+                text = item.label,
+                fontSize = 12.sp,
+                color = colorResource(id = R.color.grey_shade2),
                 modifier = Modifier.padding(10.dp),
-                onClick = { onItemClick(item) }
         )
     }
 }
+
 @Composable
 fun getBackgroundColor(shouldHighlight: Boolean): Color {
     return if (shouldHighlight) {
