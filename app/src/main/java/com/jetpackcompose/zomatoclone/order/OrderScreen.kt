@@ -11,7 +11,9 @@ import androidx.compose.ui.unit.dp
 import com.jetpackcompose.zomatoclone.R
 import com.jetpackcompose.zomatoclone.components.*
 import com.jetpackcompose.zomatoclone.home.Category
+import com.jetpackcompose.zomatoclone.home.Cuisine
 import com.jetpackcompose.zomatoclone.home.FilterItem
+import com.jetpackcompose.zomatoclone.home.ShowMoreUiState
 
 @Composable
 fun OrderScreen() {
@@ -28,6 +30,27 @@ fun OrderScreen() {
             Category(1, "Trending", R.drawable.ic_trending)
 
     )
+    val cuisine = mutableStateListOf<Cuisine>(
+            Cuisine(1, "Pasta", R.drawable.pasta),
+            Cuisine(1, "Salad", R.drawable.salad),
+            Cuisine(1, "french", R.drawable.french),
+            Cuisine(1, "Pasta", R.drawable.pasta),
+            Cuisine(1, "Salad", R.drawable.salad),
+            Cuisine(1, "french", R.drawable.french)
+    )
+
+    val showMoreUiState = ShowMoreUiState("see more") {
+        val data = listOf<Cuisine>(
+                Cuisine(1, "Pasta", R.drawable.pasta),
+                Cuisine(1, "Salad", R.drawable.salad),
+                Cuisine(1, "french", R.drawable.french),
+                Cuisine(1, "Pasta", R.drawable.pasta),
+                Cuisine(1, "Salad", R.drawable.salad),
+                Cuisine(1, "french", R.drawable.french)
+        )
+        val size = cuisine.size
+        cuisine.addAll(size, data)
+    }
     Column(modifier = Modifier.padding(15.dp)) {
         Row(modifier = Modifier.fillMaxWidth()) {
             LocationView(Modifier.weight(4f))
@@ -40,8 +63,10 @@ fun OrderScreen() {
             filterItems.removeAt(index)
             filterItems.add(index, modifiedItem)
         }
-        CategoryComponent(modifier = Modifier.padding(vertical = 20.dp) , items = categoryItem, onItemClick = {
+        CategoryComponent(modifier = Modifier.padding(vertical = 20.dp), items = categoryItem, onItemClick = {
         })
+        CuisineComponent(modifier = Modifier.padding(vertical = 20.dp), items = cuisine, onItemClick = {
+        }, showMoreUiState = showMoreUiState)
     }
 }
 
