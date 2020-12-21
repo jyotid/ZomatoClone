@@ -1,4 +1,4 @@
-package com.jetpackcompose.zomatoclone.home
+package com.jetpackcompose.zomatoclone.components
 
 import androidx.compose.foundation.Text
 import androidx.compose.material.BottomNavigation
@@ -10,10 +10,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
+import com.jetpackcompose.zomatoclone.home.Item
 
 
 @Composable
-fun BottomNavigator(items : List<Item>, navController: NavHostController) {
+fun BottomNavigatorComponent(items : List<Item>, navController: NavHostController) {
     val selectedItem = mutableStateOf(items[0])
     BottomNavigation(backgroundColor = Color.White) {
         items.forEach { item ->

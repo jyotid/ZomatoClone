@@ -2,18 +2,15 @@ package com.jetpackcompose.zomatoclone.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jetpackcompose.zomatoclone.R
+import com.jetpackcompose.zomatoclone.components.BottomNavigatorComponent
 import com.jetpackcompose.zomatoclone.goout.GoOutScreen
 import com.jetpackcompose.zomatoclone.home.Route.*
 import com.jetpackcompose.zomatoclone.order.OrderScreen
@@ -36,7 +33,7 @@ fun HomeScreen(){
         Profile(PROFILE_SCREEN,"Profile", R.drawable.ic_profile)
     )
     Scaffold(
-        bottomBar = { BottomNavigator(items, navController) }
+        bottomBar = { BottomNavigatorComponent(items, navController) }
     ) {
         HomeScreenNavigationConfig(navController)
     }
