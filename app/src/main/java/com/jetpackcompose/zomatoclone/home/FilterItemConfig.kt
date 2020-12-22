@@ -6,4 +6,6 @@ data class Category(val id : Int, val label: String, val drawableRes: Int)
 
 data class Cuisine(val id: Int, val label: String, val drawableRes: Int)
 
-class ShowMoreUiState(var label : String,  inline var onClick:()->Unit)
+class ShowMoreUiState(var label : String, var drawableRes: Int, inline var onClick:()->Unit)
+
+data class CusineListUiState(val items : List<Cuisine>, var isExpanded: Boolean)

@@ -4,34 +4,48 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
-import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jetpackcompose.zomatoclone.home.Cuisine
+import com.jetpackcompose.zomatoclone.home.CusineListUiState
 import com.jetpackcompose.zomatoclone.home.ShowMoreUiState
 
 @Composable
 fun CuisineComponent(modifier: Modifier,
-                     items: List<Cuisine>,
+                     cuisineListUiState: MutableState<CusineListUiState>,
                      onItemClick: (Cuisine) -> Unit,
                      showMoreUiState: ShowMoreUiState
 ) {
     Column(modifier = modifier) {
         Text(text = "Eat what makes you happy", fontWeight = FontWeight.Bold)
-        LazyGridFor(items = items, rows = 3) { cuisine: Cuisine, modifier: Modifier ->
+        LazyGridFor(items = cuisineListUiState.value.items, rows = 3, isExpanded = cuisineListUiState.value.isExpanded) { cuisine: Cuisine, modifier: Modifier ->
             getCuisineCard(modifier, cuisine, onItemClick = onItemClick)
         }
         Card(Modifier.fillMaxWidth().padding(vertical = 8.dp).clickable(onClick = { showMoreUiState.onClick() })) {
-            Text(text = showMoreUiState.label, textAlign = TextAlign.Center, modifier = Modifier.padding(4.dp))
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                Text(
+                        text = showMoreUiState.label,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(4.dp),
+
+                        )
+                Icon(asset = vectorResource(id = showMoreUiState.drawableRes))
+            }
+
         }
+        Spacer(modifier = Modifier.padding(10.dp))
+
     }
 
 }
@@ -50,16 +64,29 @@ fun getCuisineCard(modifier: Modifier, cuisine: Cuisine, onItemClick: (Cuisine) 
 fun <T> LazyGridFor(
         items: List<T> = listOf(),
         rows: Int,
-        itemContent: @Composable LazyItemScope.(T, Modifier) -> Unit
+        isExpanded: Boolean,
+        itemContent: @Composable RowScope.(T, Modifier) -> Unit
 ) {
     val chunkedList = items.chunked(rows)
-    LazyColumnFor(items = chunkedList) {
-        Row {
-            it.forEach { item ->
-                itemContent(item, Modifier.weight(1.0f).height(120.dp))
+    if (isExpanded) {
+        chunkedList.forEach {
+            Column {
+                Row {
+                    it.forEach {
+                        itemContent(it, Modifier.weight(1.0f).height(120.dp))
+                    }
+                }
+
             }
-            repeat(rows - it.size) {
-                Box(modifier = Modifier.weight(1F).padding(8.dp)) {}
+        }
+    } else {
+        (0..1).forEach {
+            Column {
+                Row {
+                    chunkedList[it].forEach {
+                        itemContent(it, Modifier.weight(1.0f).height(120.dp))
+                    }
+                }
             }
         }
     }
