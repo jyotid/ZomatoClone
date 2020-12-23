@@ -9,6 +9,7 @@ object Version{
     val Compose = "1.0.0-alpha06"
     val Navigation = "1.0.0-alpha01"
     val Retrofit = "2.6.2"
+    val Dagger = "2.10"
 }
 object Dependencies {
     val Rx = "io.reactivex.rxjava3:rxjava:3.0.0"
@@ -38,5 +39,9 @@ object Retrofit{
     val Lib = "com.squareup.retrofit2:retrofit:${Version.Retrofit}"
     val Converter = "com.squareup.retrofit2:converter-moshi:${Version.Retrofit}"
     val Adapter = "com.squareup.retrofit2:adapter-rxjava2:${Version.Retrofit}"
+}
+object Dagger{
+    val Lib = "com.google.dagger:dagger:${Version.Dagger}"
+    val AnnotationProcessor = "com.google.dagger:dagger-compiler:${Version.Dagger}"
 }
 
