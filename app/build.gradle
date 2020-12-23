@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+
 }
 
 android {
@@ -40,6 +43,9 @@ android {
         kotlinCompilerVersion Version.Kotlin
         kotlinCompilerExtensionVersion Version.KotlinCompilerExtensionVersion
     }
+    kapt {
+        generateStubs = true
+    }
 }
 
 dependencies {
@@ -56,5 +62,12 @@ dependencies {
     implementation Compose.Icons
     implementation Compose.Livedata
     implementation Compose.Navigation
-
+    implementation Retrofit.Lib
+    implementation Retrofit.Converter
+    implementation Retrofit.Adapter
+    implementation Hilt.Core
+    implementation Hilt.Common
+    implementation Hilt.ViewModel
+    kapt Hilt.DaggerHiltCompiler
+    kapt Hilt.Compiler
 }
