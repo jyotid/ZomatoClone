@@ -8,6 +8,7 @@ object Version{
     val KotlinCompilerExtensionVersion = "1.0.0-alpha06"
     val Compose = "1.0.0-alpha06"
     val Navigation = "1.0.0-alpha01"
+    val Retrofit = "2.6.2"
 }
 object Dependencies {
     val Rx = "io.reactivex.rxjava3:rxjava:3.0.0"
@@ -33,6 +34,9 @@ object Kotlin{
     val STDLib = "org.jetbrains.kotlin:kotlin-stdlib:${Version.Kotlin}"
 }
 
-object Material {
-
+object Retrofit{
+    val Lib = "com.squareup.retrofit2:retrofit:${Version.Retrofit}"
+    val Converter = "com.squareup.retrofit2:converter-moshi:${Version.Retrofit}"
+    val Adapter = "com.squareup.retrofit2:adapter-rxjava2:${Version.Retrofit}"
 }
+

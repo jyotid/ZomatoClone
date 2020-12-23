@@ -33,4 +33,7 @@ android {
 
 dependencies {
     implementation Dependencies.Rx
+    implementation Retrofit.Lib
+    implementation Retrofit.Converter
+    implementation Retrofit.Adapter
 }
