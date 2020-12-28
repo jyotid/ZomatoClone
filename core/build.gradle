@@ -36,4 +36,7 @@ dependencies {
     implementation Retrofit.Lib
     implementation Retrofit.Converter
     implementation Retrofit.Adapter
+    implementation Hilt.Core
+    implementation Hilt.Common
+    implementation Hilt.ViewModel
 }

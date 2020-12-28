@@ -1,7 +1,7 @@
 package com.jetpackcompose.zomatoclone.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.setContent
@@ -14,26 +14,35 @@ import com.jetpackcompose.zomatoclone.components.BottomNavigatorComponent
 import com.jetpackcompose.zomatoclone.goout.GoOutScreen
 import com.jetpackcompose.zomatoclone.home.Route.*
 import com.jetpackcompose.zomatoclone.order.OrderScreen
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var homePresenter: HomePresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             HomeScreen()
         }
+        homePresenter.fetchData()
     }
 }
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen() {
     val navController = rememberNavController()
     val items = listOf(
-        Order(ORDER_SCREEN,"Order", R.drawable.ic_order),
-        GoOut(GOOUT_SCREEN,"Go Out", R.drawable.ic_go_out),
-        Pro(PRO_SCREEN, "Pro", R.drawable.ic_premium),
-        Profile(PROFILE_SCREEN,"Profile", R.drawable.ic_profile)
+            Order(ORDER_SCREEN, "Order", R.drawable.ic_order),
+            GoOut(GOOUT_SCREEN, "Go Out", R.drawable.ic_go_out),
+            Pro(PRO_SCREEN, "Pro", R.drawable.ic_premium),
+            Profile(PROFILE_SCREEN, "Profile", R.drawable.ic_profile)
     )
     Scaffold(
-        bottomBar = { BottomNavigatorComponent(items, navController) }
+            bottomBar = { BottomNavigatorComponent(items, navController) }
     ) {
         HomeScreenNavigationConfig(navController)
     }
@@ -42,20 +51,20 @@ fun HomeScreen(){
 @Composable
 fun HomeScreenNavigationConfig(navController: NavHostController) {
     NavHost(
-        navController = navController,
-        startDestination = ORDER_SCREEN.name,
-        builder = {
-            composable(ORDER_SCREEN.name) {
-                OrderScreen()
-            }
-            composable(GOOUT_SCREEN.name) {
-                GoOutScreen()
-            }
-            composable(PRO_SCREEN.name) {
-                OrderScreen()
-            }
-            composable(PROFILE_SCREEN.name) {
-                GoOutScreen()
-            }
-        })
+            navController = navController,
+            startDestination = ORDER_SCREEN.name,
+            builder = {
+                composable(ORDER_SCREEN.name) {
+                    OrderScreen()
+                }
+                composable(GOOUT_SCREEN.name) {
+                    GoOutScreen()
+                }
+                composable(PRO_SCREEN.name) {
+                    OrderScreen()
+                }
+                composable(PROFILE_SCREEN.name) {
+                    GoOutScreen()
+                }
+            })
 }
