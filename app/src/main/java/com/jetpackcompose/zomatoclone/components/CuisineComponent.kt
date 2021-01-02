@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jetpackcompose.zomatoclone.home.Cuisine
 import com.jetpackcompose.zomatoclone.home.CusineListUiState
+import com.jetpackcompose.zomatoclone.home.HomePresenter.Section.Cuisine
 import com.jetpackcompose.zomatoclone.home.ShowMoreUiState
 
 @Composable

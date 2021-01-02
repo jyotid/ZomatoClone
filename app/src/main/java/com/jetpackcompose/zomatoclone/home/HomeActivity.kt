@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -18,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity(homePresenter: HomePresenter = HomePresenter()) : AppCompatActivity() {
 
     @Inject
     lateinit var homePresenter: HomePresenter
@@ -26,14 +27,13 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HomeScreen()
+            HomeScreen(homePresenter)
         }
-        homePresenter.fetchData()
     }
 }
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(homePresenter: HomePresenter) {
     val navController = rememberNavController()
     val items = listOf(
             Order(ORDER_SCREEN, "Order", R.drawable.ic_order),
@@ -44,24 +44,24 @@ fun HomeScreen() {
     Scaffold(
             bottomBar = { BottomNavigatorComponent(items, navController) }
     ) {
-        HomeScreenNavigationConfig(navController)
+        HomeScreenNavigationConfig(navController, homePresenter = homePresenter)
     }
 }
 
 @Composable
-fun HomeScreenNavigationConfig(navController: NavHostController) {
+fun HomeScreenNavigationConfig(navController: NavHostController, homePresenter: HomePresenter) {
     NavHost(
             navController = navController,
             startDestination = ORDER_SCREEN.name,
             builder = {
                 composable(ORDER_SCREEN.name) {
-                    OrderScreen()
+                    OrderScreen(homePresenter.uiState.observeAsState().value!!, homePresenter::onFilterItemClicked)
                 }
                 composable(GOOUT_SCREEN.name) {
                     GoOutScreen()
                 }
                 composable(PRO_SCREEN.name) {
-                    OrderScreen()
+                    OrderScreen(homePresenter.uiState.observeAsState().value!!, homePresenter::onFilterItemClicked)
                 }
                 composable(PROFILE_SCREEN.name) {
                     GoOutScreen()
