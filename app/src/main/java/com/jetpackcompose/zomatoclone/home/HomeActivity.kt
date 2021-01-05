@@ -55,13 +55,12 @@ fun HomeScreenNavigationConfig(navController: NavHostController, homePresenter: 
             startDestination = ORDER_SCREEN.name,
             builder = {
                 composable(ORDER_SCREEN.name) {
-                    OrderScreen(homePresenter.uiState.observeAsState().value!!, homePresenter::onFilterItemClicked)
+                    OrderScreen(homePresenter.uiState.observeAsState().value!!, homePresenter::onFilterItemClicked, homePresenter::onShowMoreClick)
                 }
                 composable(GOOUT_SCREEN.name) {
                     GoOutScreen()
                 }
                 composable(PRO_SCREEN.name) {
-                    OrderScreen(homePresenter.uiState.observeAsState().value!!, homePresenter::onFilterItemClicked)
                 }
                 composable(PROFILE_SCREEN.name) {
                     GoOutScreen()

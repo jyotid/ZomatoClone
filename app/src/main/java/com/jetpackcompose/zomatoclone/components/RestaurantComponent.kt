@@ -15,10 +15,12 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jetpackcompose.zomatoclone.home.HomePresenter.Section.Restaurants
+import com.jetpackcompose.zomatoclone.home.HomePresenter
+import com.jetpackcompose.zomatoclone.home.HomePresenter.Item.Restaurant
 
 @Composable
-fun RestaurantComponent(modifier: Modifier, items: List<Restaurants>, onItemClick: (Restaurants) -> Unit) {
+fun RestaurantComponent(modifier: Modifier, state : HomePresenter.SectionNew.RestaurantSection, onItemClick: (Restaurant) -> Unit) {
+    val items = state.list
     Text(text = "${items.size} Restaurants around you")
     Column(modifier = modifier) {
         items.forEach {
@@ -30,7 +32,7 @@ fun RestaurantComponent(modifier: Modifier, items: List<Restaurants>, onItemClic
 }
 
 @Composable
-fun getRestaurantCard(item: Restaurants, onItemClick: (Restaurants) -> Unit) {
+fun getRestaurantCard(item: Restaurant, onItemClick: (Restaurant) -> Unit) {
     Card(modifier = Modifier.padding(5.dp), elevation = 8.dp) {
         Column(modifier = Modifier.clickable(onClick = { onItemClick(item) })) {
             Image(contentScale = ContentScale.FillWidth, asset = imageResource(id = item.drawableRes), modifier = Modifier.fillMaxWidth().fillMaxHeight(fraction = 0.5f))

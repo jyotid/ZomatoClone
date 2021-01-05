@@ -13,16 +13,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jetpackcompose.zomatoclone.R
-import com.jetpackcompose.zomatoclone.home.HomePresenter.Section.Category
+import com.jetpackcompose.zomatoclone.home.HomePresenter.Item.CategoryItem
+import com.jetpackcompose.zomatoclone.home.HomePresenter.SectionNew.CategorySection
 
 @Composable
-fun CategoryComponent(modifier: Modifier, items: List<Category>, onItemClick: (Category) -> Unit){
-    LazyRowFor(items = items, modifier = modifier) {
+fun CategoryComponent(modifier: Modifier, state : CategorySection, onItemClick: (CategoryItem) -> Unit){
+    LazyRowFor(items = state.list, modifier = modifier) {
         getCard(it, onItemClick = onItemClick)
     }
 }
 @Composable
-fun getCard(it: Category, onItemClick: (Category)-> Unit) {
+fun getCard(it: CategoryItem, onItemClick: (CategoryItem)-> Unit) {
    Card(modifier = Modifier.width(96.dp).height(96.dp).padding(5.dp), elevation = 8.dp) {
        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable(onClick = { onItemClick(it) })) {
            Box(modifier = Modifier.background(color = colorResource(id = R.color.grey_shade1)).weight(2.0f).fillMaxWidth(), alignment = Alignment.Center){

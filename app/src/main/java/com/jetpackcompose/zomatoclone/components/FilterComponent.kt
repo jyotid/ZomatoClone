@@ -14,19 +14,20 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jetpackcompose.zomatoclone.R
-import com.jetpackcompose.zomatoclone.home.HomePresenter.Section.Filter
+import com.jetpackcompose.zomatoclone.home.HomePresenter.Item.FilterItem
+import com.jetpackcompose.zomatoclone.home.HomePresenter.SectionNew.FilterSection
 
 @Composable
-fun FilterComponent(modifier: Modifier, items: List<Filter>, onItemClick: (Filter) -> Unit) {
+fun FilterComponent(modifier: Modifier, state : FilterSection, onItemClick: (FilterItem) -> Unit) {
     ScrollableRow(modifier = modifier) {
-        items.forEach {
+        state.list.forEach {
             getFilterPill(it, it.isSelected, onItemClick)
         }
     }
 }
 
 @Composable
-fun getFilterPill(item: Filter, shouldHighlight: Boolean, onItemClick: (Filter) -> Unit) {
+fun getFilterPill(item: FilterItem, shouldHighlight: Boolean, onItemClick: (FilterItem) -> Unit) {
     Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(5.dp).border(

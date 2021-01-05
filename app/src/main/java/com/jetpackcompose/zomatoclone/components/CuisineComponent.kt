@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -17,30 +16,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jetpackcompose.zomatoclone.home.CusineListUiState
-import com.jetpackcompose.zomatoclone.home.HomePresenter.Section.Cuisine
-import com.jetpackcompose.zomatoclone.home.ShowMoreUiState
+import com.jetpackcompose.zomatoclone.R
+import com.jetpackcompose.zomatoclone.home.HomePresenter.Item.CuisineItem
+import com.jetpackcompose.zomatoclone.home.HomePresenter.SectionNew.CuisineSection
 
 @Composable
 fun CuisineComponent(modifier: Modifier,
-                     cuisineListUiState: MutableState<CusineListUiState>,
-                     onItemClick: (Cuisine) -> Unit,
-                     showMoreUiState: ShowMoreUiState
+                     state: CuisineSection,
+                     onItemClick: (CuisineItem) -> Unit,
+                     onShowMoreClick : () -> Unit
 ) {
     Column(modifier = modifier) {
         Text(text = "Eat what makes you happy", fontWeight = FontWeight.Bold)
-        LazyGridFor(items = cuisineListUiState.value.items, rows = 3, isExpanded = cuisineListUiState.value.isExpanded) { cuisine: Cuisine, modifier: Modifier ->
+        LazyGridFor(items = state.list, rows = 3, isExpanded = state.isExpanded) { cuisine: CuisineItem, modifier: Modifier ->
             getCuisineCard(modifier, cuisine, onItemClick = onItemClick)
         }
-        Card(Modifier.fillMaxWidth().padding(vertical = 8.dp).clickable(onClick = { showMoreUiState.onClick() })) {
+        Card(Modifier.fillMaxWidth().padding(vertical = 8.dp).clickable(onClick = { onShowMoreClick.invoke() })) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
                 Text(
-                        text = showMoreUiState.label,
+                        text = if (state.isExpanded) "see less" else "see more",
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(4.dp),
 
                         )
-                Icon(asset = vectorResource(id = showMoreUiState.drawableRes))
+                Icon(asset = vectorResource(id = if (state.isExpanded) R.drawable.ic_collapse else R.drawable.ic_expand))
             }
 
         }
@@ -51,7 +50,7 @@ fun CuisineComponent(modifier: Modifier,
 }
 
 @Composable
-fun getCuisineCard(modifier: Modifier, cuisine: Cuisine, onItemClick: (Cuisine) -> Unit) {
+fun getCuisineCard(modifier: Modifier, cuisine: CuisineItem, onItemClick: (CuisineItem) -> Unit) {
     Card(modifier = modifier.padding(5.dp), elevation = 8.dp) {
         Column(modifier = Modifier.clickable(onClick = { onItemClick(cuisine) })) {
             Image(contentScale = ContentScale.FillWidth, asset = imageResource(id = cuisine.drawableRes), modifier = Modifier.weight(2.0f).fillMaxWidth())
